@@ -129,3 +129,5 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'khushishukl185@gmail.com'
 EMAIL_HOST_PASSWORD = 'mucv lyjg mvko enag'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
