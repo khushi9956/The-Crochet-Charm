@@ -1,0 +1,350 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Crochet Charm</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    :root{--brand:#d97706}
+    .hero{background:linear-gradient(90deg,rgba(217,119,6,.06),rgba(217,119,6,.02));padding:4rem 0}
+    
+    footer{background:#f3f1f1;padding:2rem 0}
+
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+      {% load static %}
+
+<a class="navbar-brand fw-bold d-flex align-items-center" href="#">
+   
+        
+
+   
+    Welcome to The Crochet Charm! 🧶✨
+</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav" aria-controls="nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#products">Products</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+          <form class="d-flex ms-3" method="GET">
+    <input
+        class="form-control me-2"
+        type="search"
+        name="search"
+        placeholder="Search products">
+
+    <button class="btn btn-outline-dark" type="submit">
+        Search
+    </button>
+</form>
+
+       
+      </div>
+    </div>
+  </nav>
+  <header class="hero">
+    <div class="container text-center">
+
+        <img src="{% static 'images/ChatGPT Image Jun 9, 2026, 04_04_27 PM.png' %}"
+             alt="The Hnadmade Crochet Charm Logo"
+             class="hero-logo">
+
+
+      <h1 class="display-5">The Crochet Charm</h1>
+      <p class="lead">Handmade crochet products — scarves, bags, toys & home decor. Har item haath se bana hua, pyaar aur quality ke saath.</p>
+      <a href="#products" class="btn btn-warning text-white">Shop Now</a>
+    </div>
+  </header>
+
+  <main class="my-5">
+    <div class="container">
+      <section id="products">
+        <div class="text-center mb-4">
+          <h2>Popular Products</h2>
+          <p class="text-muted fw-bold fs-5">
+    Free shipping on orders over ₹1500
+</p>
+        </div>
+
+        <div class="row g-4">
+
+{% if request.GET.search %}
+<script>
+window.onload = function() {
+    document.getElementById("products").scrollIntoView({
+        behavior: "smooth"
+    });
+};
+</script>
+{% endif %}
+
+{% for product in products %}
+
+<div class="col-6 col-md-4 col-lg-3">
+    <div class="card product-card h-100">
+
+        <img src="{{ product.image.url }}"
+             class="card-img-top"
+             alt="{{ product.name }}">
+
+        <div class="card-body">
+
+            <h5 class="card-title text-center">
+                {{ product.name }}
+            </h5>
+
+            <div class="text-center">
+
+                <h5 class="fw-bold">
+                    ₹{{ product.price }}
+                </h5>
+
+                <a href="https://wa.me/919519499698?text=Hi%20I%20want%20to%20order%20{{ product.name }}"
+                   class="btn btn-success order-btn">
+                    Order Now
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endfor %}
+        </div>
+      </section>
+
+      <section id="about" class="about-section mt-5">
+
+    <h2 class="text-center">About The Crochet Charm</h2>
+
+    <p>
+        At The Crochet Charm, every stitch is made with love, creativity,
+        and attention to detail. We specialize in handmade crochet creations,
+        including beautiful bouquets, hair accessories, keychains, bags,
+        and customized gifts.
+    </p>
+
+    <p>
+        Our mission is to bring warmth and happiness through unique
+        handcrafted products that are made especially for you.
+    </p>
+
+    <p>
+        Thank you for supporting handmade art and being a part
+        of our crochet journey.
+    </p>
+
+</section>
+<section class="container my-5">
+
+    <div class="card shadow-sm border-0 rounded-4">
+
+        <div class="card-body text-center p-5">
+
+            <h2 class="fw-bold mb-5">
+                Why Choose The Crochet Charm? 🧶
+            </h2>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-4">
+                    <h3>💖</h3>
+                    <h5>Handmade With Love</h5>
+                    <p>
+                        Every crochet creation is handcrafted with care,
+                        creativity, and attention to detail.
+                    </p>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <h3>✨</h3>
+                    <h5>Custom Orders</h5>
+                    <p>
+                        We create personalized crochet gifts made specially
+                        according to your preferences.
+                    </p>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <h3>🎁</h3>
+                    <h5>Perfect For Gifting</h5>
+                    <p>
+                        Beautiful handmade crochet products for birthdays,
+                        anniversaries and special occasions.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<section class="container my-5">
+
+    <div class="card shadow-sm border-0 rounded-4">
+        <div class="card-body text-center p-5">
+
+            <h2 class="fw-bold mb-3">
+                ✨ Need a Custom Crochet Design?
+            </h2>
+
+            <p class="lead text-muted">
+                Looking for a personalized crochet gift or a unique handmade creation?
+                We would love to bring your ideas to life with custom crochet designs made especially for you.
+            </p>
+
+            <a href="#contact" class="btn btn-warning btn-lg mt-3">
+                Request a Custom Order
+            </a>
+
+        </div>
+    </div>
+
+</section>
+
+      </section>
+
+     <section id="contact" class="container my-5">
+
+    <h2 class="text-center mb-4">Contact Us</h2>
+    
+
+    <form method="POST"
+          class="card p-3 shadow-sm mx-auto"
+          style="max-width:500px;">
+      {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input
+                type="text"
+                name="name"
+                class="form-control"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Email</label>
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+                required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Message</label>
+            <textarea
+                name="message"
+                rows="5"
+                class="form-control"
+                required></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-warning">
+            Send Message
+        </button>
+    </form>
+    <div class="modal fade" id="successModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Message Sent 💖</h5>
+
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body text-center">
+                Thank you! Your message has been sent successfully.
+                We will contact you soon. 🧶✨
+            </div>
+
+            <div class="modal-footer">
+                <button type="button"
+                        class="btn btn-warning"
+                        data-bs-dismiss="modal">
+                    OK
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</section>
+        
+      
+    </div>
+ 
+ </main>
+{% if messages %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    const successModal = new bootstrap.Modal(
+        document.getElementById('successModal')
+    );
+
+    successModal.show();
+
+});
+</script>
+
+{% for message in messages %}
+    <!-- message consume ho jayega -->
+{% endfor %}
+
+{% endif %}
+  <footer>
+    <div class="container text-center">
+      
+        <p>
+            Handmade with Love 🧶💖
+        </p>
+
+        <p>
+           <div class="mt-3">
+    <a href="https://instagram.com/handmadecrochetcharms"
+       target="_blank"
+       class="btn btn-outline-dark me-2">
+       <i class="bi bi-instagram"></i>
+       Instagram
+    </a>
+
+    <a href="https://wa.me/919519499698"
+       target="_blank"
+       class="btn btn-success">
+       <i class="bi bi-whatsapp"></i>
+       WhatsApp
+    </a>
+</div>
+</p>
+
+        <small>
+            © 2026 The Crochet Charm. All Rights Reserved.
+        </small>
+    </div>
+</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
