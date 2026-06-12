@@ -262,12 +262,8 @@ html{
 .hero{
     background: linear-gradient(
         rgba(255,255,255,0.85),
-        rgba(255,255,255,0.85)
-    ),
-    url('/static/images/banner.jpg');
-    background-size: cover;
-    background-position: center;
-}
+     rgb(239, 242, 199) !important;
+    )}
 .product-card img{
     transition: 0.4s;
 }
@@ -340,4 +336,52 @@ html{
         height: 55px;
         font-size: 24px;
     }
+    /* Mobile Responsive */
+
+@media (max-width: 768px) {
+
+    .hero-logo{
+        width: 180px;
+        height: auto;
+    }
+
+    .display-5{
+        font-size: 2rem;
+    }
+
+    .lead{
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    .about-section,
+    .custom-order{
+        width: 95%;
+        padding: 20px;
+    }
+
+    .about-section h2,
+    .custom-order h2{
+        font-size: 1.8rem;
+    }
+
+    .about-section p,
+    .custom-order p{
+        font-size: 1rem;
+    }
+
+    .order-btn{
+        width: 100%;
+    }
+
+    .navbar-brand{
+        font-size: 1rem;
+    }
+
+    .whatsapp-float{
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+    }
+}
 }
