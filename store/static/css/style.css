@@ -1,11 +1,11 @@
 body{
    
     background-color: #FFF8FB;
-}
 
+{
  font-family: 'times new roman', sans-serif;
  font-weight: 500;
-
+}
  h1,h2,h3,h4,h5{
     font-weight:700;
 }
@@ -292,4 +292,52 @@ html{
 
 .card:hover{
     transform: translateY(-5px);
+}
+/* Mobile Responsive */
+
+@media (max-width: 768px) {
+
+    .hero-logo{
+        width: 180px;
+        height: auto;
+    }
+
+    .display-5{
+        font-size: 2rem;
+    }
+
+    .lead{
+        font-size: 1rem;
+        padding: 0 15px;
+    }
+
+    .about-section,
+    .custom-order{
+        width: 95%;
+        padding: 20px;
+    }
+
+    .about-section h2,
+    .custom-order h2{
+        font-size: 1.8rem;
+    }
+
+    .about-section p,
+    .custom-order p{
+        font-size: 1rem;
+    }
+
+    .order-btn{
+        width: 100%;
+    }
+
+    .navbar-brand{
+        font-size: 1rem;
+    }
+
+    .whatsapp-float{
+        width: 55px;
+        height: 55px;
+        font-size: 24px;
+    }
 }
