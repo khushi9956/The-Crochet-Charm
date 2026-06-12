@@ -23,14 +23,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-3d_!@sv(@=z$jvj0)qh2ze7)@vmj*7&ajc7uc*a7eic^0b)@$2'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
+
+
     'the-crochet-charm.onrender.com',
     'localhost',
     '127.0.0.1',
-    DEBUG = False
 ]
+   
 
 
 # Application definition
