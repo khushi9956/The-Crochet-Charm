@@ -13,7 +13,7 @@ def home(request):
             email=request.POST['email'],
             message=request.POST['message']
         )
-        print("CONTACT SAVED SUCCESSFULLY")
+        print("CONTACT SAVED:", request.POST['name'])
         messages.success(
             request,
             "Thank you! Your message has been sent successfully. 💖"
