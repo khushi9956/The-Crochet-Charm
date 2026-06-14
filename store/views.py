@@ -6,14 +6,19 @@ from django.conf import settings
 
 def home(request):
 
+    print("HOME VIEW HIT")
+
     if request.method == "POST":
+
+        print("POST RECEIVED")
 
         Contact.objects.create(
             name=request.POST['name'],
             email=request.POST['email'],
             message=request.POST['message']
         )
-        print("CONTACT SAVED:", request.POST['name'])
+
+        print("CONTACT SAVED")
         messages.success(
             request,
             "Thank you! Your message has been sent successfully. 💖"
