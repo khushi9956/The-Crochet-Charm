@@ -139,11 +139,6 @@ EMAIL_HOST_USER = 'khushishukl185@gmail.com'
 EMAIL_HOST_PASSWORD = 'mucv lyjg mvko enag'
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
-    },
-}
+CSRF_TRUSTED_ORIGINS = [
+    "https://the-crochet-charm.onrender.com",
+]
