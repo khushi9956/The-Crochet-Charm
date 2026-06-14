@@ -3,6 +3,7 @@ from django.contrib import messages
 from .models import Product, Contact
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import HttpResponse
 
 def home(request):
 
@@ -40,3 +41,10 @@ def home(request):
         'index.html',
         {'products': products}
     )
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Sitemap: https://the-crochet-charm.onrender.com/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
