@@ -13,28 +13,13 @@ def home(request):
             email=request.POST['email'],
             message=request.POST['message']
         )
-#         send_mail(
-#     'New Crochet Inquiry 🧶',
-#     f'''
-# Name: {request.POST["name"]}
 
-# Email: {request.POST["email"]}
+        messages.success(
+            request,
+            "Thank you! Your message has been sent successfully. 💖"
+        )
 
-# Message:
-# {request.POST["message"]}
-# ''',
-#     settings.EMAIL_HOST_USER,
-#     [settings.EMAIL_HOST_USER],
-#     fail_silently=False,
-# )
-
-#         messages.success(
-#             request,
-#             "Thank you! Your message has been sent successfully. 💖"
-#         )
-
-#         return redirect('/')
-        
+        return redirect('/')
 
     products = Product.objects.all()
 
@@ -49,6 +34,4 @@ def home(request):
         request,
         'index.html',
         {'products': products}
-        
     )
-    
