@@ -16,10 +16,11 @@ body{
 }
 
 .hero{
-    background:rgb(239, 242, 199) !important;
+   background:#f7d6e8;
     border-radius:10px;
     padding:30px;
     box-shadow:0 4px 8px rgba(0,0,0,0.1);
+    color:#7a4e65;
 
 }
 .hero-logo{
@@ -382,6 +383,43 @@ html{
         width: 55px;
         height: 55px;
         font-size: 24px;
+    }
+}
+.announcement-wrapper{
+    width:100%;
+    overflow:hidden;
+    background:#f8d7da;
+    padding:12px 0;
+    border-top:1px solid #f1c5cb;
+    border-bottom:1px solid #f1c5cb;
+}
+
+.announcement-track{
+    display:flex;
+    width:max-content;
+    animation: marquee 20s linear infinite;
+}
+
+.announcement-track span{
+    white-space:nowrap;
+    font-size:22px;
+    font-weight:600;
+    color:#6b4f4f;
+    padding-right:80px;
+}
+
+@keyframes marquee{
+    from{
+        transform:translateX(0);
+    }
+    to{
+        transform:translateX(-50%);
+    }
+}
+
+@media(max-width:768px){
+    .announcement-track span{
+        font-size:16px;
     }
 }
 }
