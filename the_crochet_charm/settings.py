@@ -146,4 +146,8 @@ STORAGES = {
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
+    
 }
+CSRF_TRUSTED_ORIGINS = [
+    "https://the-crochet-charm.onrender.com",
+]
