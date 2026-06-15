@@ -1,0 +1,98 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Products | The Crochet Charm</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>.product-card{
+    border:none;
+    border-radius:20px;
+    overflow:hidden;
+    transition:0.4s;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+.product-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+.product-card img{
+    height:280px;
+    object-fit:contain;
+    padding:10px;
+    background:white;
+}
+
+.order-btn{
+    width:100%;
+    border-radius:10px;
+    margin-top:10px;
+}</style>
+
+</head>
+
+<body>
+
+<div class="container my-5">
+    <nav>
+        <div class="text-center mb-4">
+    <a href="/" class="btn btn-outline-dark">
+        ← Back to Home
+    </a>
+</div>
+    </nav>
+
+    <h1 class="text-center mb-5">
+        Our Crochet Collection 🧶
+    </h1>
+
+    <div class="row g-4">
+
+        {% for product in products %}
+
+        <div class="col-6 col-md-4 col-lg-3">
+
+            <div class="card product-card h-100">
+
+                <img src="{{ product.image.url }}"
+                     class="card-img-top"
+                     alt="{{ product.name }}">
+
+                <div class="card-body">
+
+                    <h5 class="card-title text-center">
+                        {{ product.name }}
+                    </h5>
+
+                    <div class="text-center">
+
+                        <h5 class="fw-bold">
+                            ₹{{ product.price }}
+                        </h5>
+
+                        <a href="https://wa.me/919519499698?text=Hi%20I%20want%20to%20order%20{{ product.name }}"
+                           class="btn btn-success order-btn">
+                            Order Now
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

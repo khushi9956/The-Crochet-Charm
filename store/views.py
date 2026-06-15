@@ -4,8 +4,26 @@ from .models import Product, Contact
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import HttpResponse
+from .models import Product
+
 
 def home(request):
+    featured_products = Product.objects.all()[:4]
+
+    return render(
+        request,
+        'index.html',
+        {'featured_products': featured_products}
+    )
+
+def products(request):
+    products = Product.objects.all()
+
+    return render(
+        request,
+        'products.html',
+        {'products': products}
+    )
 
     print("HOME VIEW HIT")
 
