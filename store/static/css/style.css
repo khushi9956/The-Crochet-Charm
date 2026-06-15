@@ -1,10 +1,13 @@
+html{
+    scroll-behavior:smooth;
+}
 body{
    
     background-color: #FFF8FB;
 
 {
- font-family: 'times new roman', sans-serif;
- font-weight: 500;
+  font-family: 'times new roman', sans-serif;
+  font-weight: 500;
 }
  h1,h2,h3,h4,h5{
     font-weight:700;
@@ -56,6 +59,7 @@ body{
     text-align: center;
     margin-bottom: 15px;
 
+}
 }
 /* Smooth Scroll */
 html{
@@ -263,7 +267,7 @@ html{
 .hero{
     background: linear-gradient(
         rgba(255,255,255,0.85),
-     rgb(239, 242, 199) !important;
+     rgb(239, 242, 199)
     )}
 .product-card img{
     transition: 0.4s;
@@ -403,7 +407,7 @@ html{
     font-weight:600;
     color:#6b4f4f;
 }
-
+}
 @keyframes marquee{
     0%{
         transform:translateX(100%);
@@ -417,5 +421,21 @@ html{
     .announcement-track span{
         font-size:16px;
     }
-}
+}.landing-page{
+    min-height:100vh;
+
+    background:
+    linear-gradient(
+        rgba(255,248,245,0.75),
+        rgba(255,248,245,0.75)
+    ),
+    url('/static/images/floral-bg.jpg.png');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
 }
