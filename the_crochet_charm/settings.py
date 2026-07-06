@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
+    'cloudinary',
+    'cloudinary_storage',
     'rest_framework',
     'corsheaders',
     'store'
@@ -142,15 +144,22 @@ EMAIL_HOST_USER = os.environ.get("khushishukl185@gmail.com")
 EMAIL_HOST_PASSWORD = os.environ.get("mucv lyjg mvko enag")
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+}
 STORAGES = {
+
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
-    
 }
+    
+
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
