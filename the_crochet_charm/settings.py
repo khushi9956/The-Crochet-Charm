@@ -154,11 +154,13 @@ STORAGES = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-      "https://YOUR-PROJECT.vercel.app",
+      "the-crochet-charm-next-9tvcj8rl0-khushishukl185-6764s-projects.vercel.app",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://the-crochet-charm-next-9tvcj8rl0-khushishukl185-6764s-projects.vercel.app",
+]
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
