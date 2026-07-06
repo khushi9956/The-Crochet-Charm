@@ -20,8 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3d_!@sv(@=z$jvj0)qh2ze7)@vmj*7&ajc7uc*a7eic^0b)@$2'
 
+import os
+
+SECRET_KEY = os.environ.get("_3q#l7%p!8^r5zqst4o1i2dm-x0oppg$kxlqd^l@3jnmy+j%47")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
@@ -132,8 +134,9 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-EMAIL_HOST_USER = 'khushishukl185@gmail.com'
-EMAIL_HOST_PASSWORD = 'mucv lyjg mvko enag'
+
+EMAIL_HOST_USER = os.environ.get("khushishukl185@gmail.com")
+EMAIL_HOST_PASSWORD = os.environ.get("mucv lyjg mvko enag")
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STORAGES = {
@@ -159,6 +162,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "khushishukl185@gmail.com"
-EMAIL_HOST_PASSWORD = "dohk molb tzlw usaf"
+EMAIL_HOST_PASSWORD = "kmbq fedv yiqx fgrj"
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
