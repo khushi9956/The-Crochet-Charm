@@ -68,7 +68,7 @@ python manage.py runserver
 Open:
 
 ```text
-http://127.0.0.1:8000/
+https://the-crochet-charm-api.onrender.com
 ```
 
 ## 💖 About
