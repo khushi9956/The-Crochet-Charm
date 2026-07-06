@@ -1,8 +1,17 @@
 from django.urls import path
-from .views import home, robots_txt
-from .views import home, products
+from .views import (
+    home,
+    products,
+    robots_txt,
+    product_list,
+    product_detail,
+    contact_api,
+)
 urlpatterns = [
-    path('', home, name='home'),
-    path('robots.txt', robots_txt),
-     path('products/', products, name='products'),
+    path("", home, name="home"),
+    path("products/", products, name="products"),
+    path("api/products/", product_list, name="api-products"),
+    path("robots.txt", robots_txt),
+    path("api/contact/", contact_api, name="contact-api"),
+    path("api/products/<int:id>/", product_detail),
 ]

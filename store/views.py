@@ -5,6 +5,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.http import HttpResponse
 from .models import Product
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .serializers import ProductSerializer
 
 
 def home(request):
@@ -66,3 +69,48 @@ def robots_txt(request):
         "Sitemap: https://the-crochet-charm.onrender.com/sitemap.xml",
     ]
     return HttpResponse("\n".join(lines), content_type="text/plain")
+
+@api_view(["GET"])
+def product_list(request):
+    products = Product.objects.all()
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
+@api_view(["GET"])
+def product_detail(request, id):
+    try:
+        product = Product.objects.get(id=id)
+    except Product.DoesNotExist:
+        return Response({"error": "Product not found"}, status=404)
+
+    serializer = ProductSerializer(product)
+    return Response(serializer.data)
+@api_view(["POST"])
+def contact_api(request):
+
+    name = request.data.get("name")
+    email = request.data.get("email")
+    message = request.data.get("message")
+
+    # Save to Database
+    Contact.objects.create(
+        name=name,
+        email=email,
+        message=message
+    )
+
+    send_mail(
+    subject=f"🌸 New Contact Form Submission - {name}",
+    message=(
+        f"New message from The Crochet Charm Website\n\n"
+        f"Name: {name}\n"
+        f"Email: {email}\n\n"
+        f"Message:\n{message}"
+    ),
+    from_email=settings.EMAIL_HOST_USER,
+    recipient_list=[settings.EMAIL_HOST_USER],
+    fail_silently=False,
+)
+    return Response({
+        "success": True,
+        "message": "Message sent successfully."
+    })
