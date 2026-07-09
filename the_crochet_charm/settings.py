@@ -163,7 +163,7 @@ STORAGES = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
-      "the-crochet-charm-next-9tvcj8rl0-khushishukl185-6764s-projects.vercel.app",
+      "https://the-crochet-charm-next-9tvcj8rl0-khushishukl185-6764s-projects.vercel.app",
 ]
 CORS_ALLOW_CREDENTIALS = True
 
