@@ -1,5 +1,10 @@
 import os
 import razorpay
+import hmac
+import hashlib
+from django.http import JsonResponse
+from rest_framework.decorators import api_view
+from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Product, Contact
@@ -134,3 +139,38 @@ def create_order(request):
     })
 
     return Response(order)
+@api_view(["POST"])
+def verify_payment(request):
+
+    razorpay_order_id = request.data.get("razorpay_order_id")
+    razorpay_payment_id = request.data.get("razorpay_payment_id")
+    razorpay_signature = request.data.get("razorpay_signature")
+
+    client = razorpay.Client(
+        auth=(
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET
+        )
+    )
+
+    try:
+
+        client.utility.verify_payment_signature({
+
+            "razorpay_order_id": razorpay_order_id,
+
+            "razorpay_payment_id": razorpay_payment_id,
+
+            "razorpay_signature": razorpay_signature,
+
+        })
+
+        return JsonResponse({
+            "success": True
+        })
+
+    except:
+
+        return JsonResponse({
+            "success": False
+        }, status=400)

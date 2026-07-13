@@ -7,6 +7,7 @@ from .views import (
     product_detail,
     contact_api,
     create_order,
+    verify_payment,
 )
 urlpatterns = [
     path("", home, name="home"),
@@ -16,4 +17,8 @@ urlpatterns = [
     path("api/contact/", contact_api, name="contact-api"),
     path("api/products/<int:id>/", product_detail),
     path("api/create-order/", create_order),
+    path(
+    "api/verify-payment/",
+    verify_payment
+),
 ]
