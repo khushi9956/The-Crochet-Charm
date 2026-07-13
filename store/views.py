@@ -1,3 +1,5 @@
+import os
+import razorpay
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Product, Contact
@@ -114,3 +116,21 @@ def contact_api(request):
         "success": True,
         "message": "Message sent successfully."
     })
+@api_view(["POST"])
+def create_order(request):
+    amount = request.data.get("amount")
+
+    client = razorpay.Client(
+        auth=(
+            os.environ.get("RAZORPAY_KEY_ID"),
+            os.environ.get("RAZORPAY_KEY_SECRET"),
+        )
+    )
+
+    order = client.order.create({
+        "amount": int(amount),
+        "currency": "INR",
+        "payment_capture": 1,
+    })
+
+    return Response(order)

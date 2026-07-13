@@ -6,6 +6,7 @@ from .views import (
     product_list,
     product_detail,
     contact_api,
+    create_order,
 )
 urlpatterns = [
     path("", home, name="home"),
@@ -14,4 +15,5 @@ urlpatterns = [
     path("robots.txt", robots_txt),
     path("api/contact/", contact_api, name="contact-api"),
     path("api/products/<int:id>/", product_detail),
+    path("api/create-order/", create_order),
 ]
