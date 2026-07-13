@@ -144,10 +144,24 @@ EMAIL_HOST_USER = os.environ.get("khushishukl185@gmail.com")
 EMAIL_HOST_PASSWORD = os.environ.get("mucv lyjg mvko enag")
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+# CLOUDINARY_STORAGE = {
+#     "CLOUD_NAME": os.environ.get("ns4hy0l2"),
+#     "API_KEY": os.environ.get("469875114635229"),
+#     "API_SECRET": os.environ.get("aaQ1eZzmLPoCgt7HTPj5yw_oKG0"),
+# }
+import cloudinary
+
+cloudinary.config(
+    cloud_name="ns4hy0l2",
+    api_key="469875114635229",
+    api_secret="aaQ1eZzmLPoCgt7HTPj5yw_oKG0",
+    secure=True,
+)
+
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+    "CLOUD_NAME": "ns4hy0l2",
+    "API_KEY": "469875114635229",
+    "API_SECRET": "aaQ1eZzmLPoCgt7HTPj5yw_oKG0",
 }
 STORAGES = {
 
