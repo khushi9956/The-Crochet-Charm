@@ -140,8 +140,4 @@ def create_order(request):
     })
 
     return Response(order)
-    except:
-
-        return JsonResponse({
-            "success": False
-        }, status=400)
+   

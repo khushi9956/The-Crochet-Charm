@@ -17,8 +17,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-RAZORPAY_KEY_ID = os.environ.get("rzp_live_TDKlmObU9NgrVR")
-RAZORPAY_KEY_SECRET = os.environ.get("5YguSBcIjL8ETp9ZCnNTi7ft")
+RAZORPAY_KEY_ID = os.environ.get("RAZORPAY_KEY_ID")
+RAZORPAY_KEY_SECRET = os.environ.get("RAZORPAY_KEY_SECRET")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -27,8 +27,10 @@ RAZORPAY_KEY_SECRET = os.environ.get("5YguSBcIjL8ETp9ZCnNTi7ft")
 
 
 
-SECRET_KEY = os.environ.get("_3q#l7%p!8^r5zqst4o1i2dm-x0oppg$kxlqd^l@3jnmy+j%47",
-                            "django-insecure-local-development-key")
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY",
+    "django-insecure-local-development-key"
+)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DEBUG", "True") == "True"
 ALLOWED_HOSTS = os.environ.get(
@@ -144,29 +146,28 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 
-EMAIL_HOST_USER = os.environ.get("khushishukl185@gmail.com")
-EMAIL_HOST_PASSWORD = os.environ.get("mucv lyjg mvko enag")
-
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-# CLOUDINARY_STORAGE = {
-#     "CLOUD_NAME": os.environ.get("ns4hy0l2"),
-#     "API_KEY": os.environ.get("469875114635229"),
-#     "API_SECRET": os.environ.get("aaQ1eZzmLPoCgt7HTPj5yw_oKG0"),
-# }
+
 import cloudinary
+
+
 
 cloudinary.config(
     cloud_name="ns4hy0l2",
-    api_key="469875114635229",
-    api_secret="aaQ1eZzmLPoCgt7HTPj5yw_oKG0",
+    api_key="581854196373421",
+    api_secret="HoQeJBJGhKvnhyMDgd9TLZI-PxU",
     secure=True,
 )
 
+
 CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": "ns4hy0l2",
-    "API_KEY": "469875114635229",
-    "API_SECRET": "aaQ1eZzmLPoCgt7HTPj5yw_oKG0",
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
 }
+
 STORAGES = {
 
     "default": {
