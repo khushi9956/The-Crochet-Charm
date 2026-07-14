@@ -126,13 +126,10 @@ def contact_api(request):
 def create_order(request):
     amount = request.data.get("amount")
 
-    print("KEY ID =", os.environ.get("rzp_live_TDIazIPujH0yoT"))
-    print("SECRET =", os.environ.get("DxRX5Qe4OUWmt5jtMCwQBRyY"))
-
     client = razorpay.Client(
         auth=(
-            os.environ.get("rzp_live_TDIazIPujH0yoT"),
-            os.environ.get("DxRX5Qe4OUWmt5jtMCwQBRyY"),
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET,
         )
     )
 

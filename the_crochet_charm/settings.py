@@ -17,8 +17,8 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-RAZORPAY_KEY_ID = os.environ.get("rzp_live_TDIazIPujH0yoT")
-RAZORPAY_KEY_SECRET = os.environ.get("DxRX5Qe4OUWmt5jtMCwQBRyY")
+RAZORPAY_KEY_ID = os.environ.get("rzp_live_TDKlmObU9NgrVR")
+RAZORPAY_KEY_SECRET = os.environ.get("5YguSBcIjL8ETp9ZCnNTi7ft")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
