@@ -140,4 +140,29 @@ def create_order(request):
     })
 
     return Response(order)
+@api_view(["POST"])
+def verify_payment(request):
+
+    razorpay_order_id = request.data.get("razorpay_order_id")
+    razorpay_payment_id = request.data.get("razorpay_payment_id")
+    razorpay_signature = request.data.get("razorpay_signature")
+
+    client = razorpay.Client(
+        auth=(
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET,
+        )
+    )
+
+    try:
+        client.utility.verify_payment_signature({
+            "razorpay_order_id": razorpay_order_id,
+            "razorpay_payment_id": razorpay_payment_id,
+            "razorpay_signature": razorpay_signature,
+        })
+
+        return JsonResponse({"success": True})
+
+    except Exception:
+        return JsonResponse({"success": False}, status=400)
    
