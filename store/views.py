@@ -121,14 +121,18 @@ def contact_api(request):
         "success": True,
         "message": "Message sent successfully."
     })
+
 @api_view(["POST"])
 def create_order(request):
     amount = request.data.get("amount")
 
+    print("KEY ID =", os.environ.get("rzp_live_TDIazIPujH0yoT"))
+    print("SECRET =", os.environ.get("DxRX5Qe4OUWmt5jtMCwQBRyY"))
+
     client = razorpay.Client(
         auth=(
-            os.environ.get("RAZORPAY_KEY_ID"),
-            os.environ.get("RAZORPAY_KEY_SECRET"),
+            os.environ.get("rzp_live_TDIazIPujH0yoT"),
+            os.environ.get("DxRX5Qe4OUWmt5jtMCwQBRyY"),
         )
     )
 
@@ -139,36 +143,6 @@ def create_order(request):
     })
 
     return Response(order)
-@api_view(["POST"])
-def verify_payment(request):
-
-    razorpay_order_id = request.data.get("razorpay_order_id")
-    razorpay_payment_id = request.data.get("razorpay_payment_id")
-    razorpay_signature = request.data.get("razorpay_signature")
-
-    client = razorpay.Client(
-        auth=(
-            settings.RAZORPAY_KEY_ID,
-            settings.RAZORPAY_KEY_SECRET
-        )
-    )
-
-    try:
-
-        client.utility.verify_payment_signature({
-
-            "razorpay_order_id": razorpay_order_id,
-
-            "razorpay_payment_id": razorpay_payment_id,
-
-            "razorpay_signature": razorpay_signature,
-
-        })
-
-        return JsonResponse({
-            "success": True
-        })
-
     except:
 
         return JsonResponse({
