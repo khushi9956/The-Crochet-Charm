@@ -153,3 +153,16 @@ def create_order(request):
         import traceback
         print(traceback.format_exc())   # Full error Render Logs me aayega
         return Response({"error": str(e)}, status=500)
+
+    try:
+        client.utility.verify_payment_signature({
+            "razorpay_order_id": razorpay_order_id,
+            "razorpay_payment_id": razorpay_payment_id,
+            "razorpay_signature": razorpay_signature,
+        })
+
+        return JsonResponse({"success": True})
+
+    except Exception:
+        return JsonResponse({"success": False}, status=400)
+   
