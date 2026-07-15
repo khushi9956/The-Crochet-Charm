@@ -89,7 +89,7 @@ def product_list(request):
             {"error": str(e)},
             status=500
         )
-@api_view(["GET"])
+        @api_view(["GET"])
 def product_detail(request, id):
     try:
         product = Product.objects.get(id=id)
@@ -153,6 +153,19 @@ def create_order(request):
         import traceback
         print(traceback.format_exc())   # Full error Render Logs me aayega
         return Response({"error": str(e)}, status=500)
+@api_view(["POST"])
+def verify_payment(request):
+
+    razorpay_order_id = request.data.get("razorpay_order_id")
+    razorpay_payment_id = request.data.get("razorpay_payment_id")
+    razorpay_signature = request.data.get("razorpay_signature")
+
+    client = razorpay.Client(
+        auth=(
+            settings.RAZORPAY_KEY_ID,
+            settings.RAZORPAY_KEY_SECRET,
+        )
+    )
 
     try:
         client.utility.verify_payment_signature({
