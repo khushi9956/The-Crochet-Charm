@@ -89,7 +89,7 @@ def product_list(request):
             {"error": str(e)},
             status=500
         )
-        @api_view(["GET"])
+@api_view(["GET"])
 def product_detail(request, id):
     try:
         product = Product.objects.get(id=id)
