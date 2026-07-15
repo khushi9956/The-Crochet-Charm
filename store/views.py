@@ -131,45 +131,25 @@ def contact_api(request):
 
 @api_view(["POST"])
 def create_order(request):
-    amount = request.data.get("amount")
-
-    client = razorpay.Client(
-        auth=(
-            settings.RAZORPAY_KEY_ID,
-            settings.RAZORPAY_KEY_SECRET,
-        )
-    )
-
-    order = client.order.create({
-        "amount": int(amount),
-        "currency": "INR",
-        "payment_capture": 1,
-    })
-
-    return Response(order)
-@api_view(["POST"])
-def verify_payment(request):
-
-    razorpay_order_id = request.data.get("razorpay_order_id")
-    razorpay_payment_id = request.data.get("razorpay_payment_id")
-    razorpay_signature = request.data.get("razorpay_signature")
-
-    client = razorpay.Client(
-        auth=(
-            settings.RAZORPAY_KEY_ID,
-            settings.RAZORPAY_KEY_SECRET,
-        )
-    )
-
     try:
-        client.utility.verify_payment_signature({
-            "razorpay_order_id": razorpay_order_id,
-            "razorpay_payment_id": razorpay_payment_id,
-            "razorpay_signature": razorpay_signature,
+        amount = request.data.get("amount")
+
+        client = razorpay.Client(
+            auth=(
+                settings.RAZORPAY_KEY_ID,
+                settings.RAZORPAY_KEY_SECRET,
+            )
+        )
+
+        order = client.order.create({
+            "amount": int(amount),
+            "currency": "INR",
+            "payment_capture": 1,
         })
 
-        return JsonResponse({"success": True})
+        return Response(order)
 
-    except Exception:
-        return JsonResponse({"success": False}, status=400)
-   
+    except Exception as e:
+        import traceback
+        print(traceback.format_exc())   # Full error Render Logs me aayega
+        return Response({"error": str(e)}, status=500)
