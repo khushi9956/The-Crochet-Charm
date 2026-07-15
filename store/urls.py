@@ -9,16 +9,18 @@ from .views import (
     create_order,
     verify_payment,
 )
+
 urlpatterns = [
     path("", home, name="home"),
     path("products/", products, name="products"),
+
     path("api/products/", product_list, name="api-products"),
-    path("robots.txt", robots_txt),
-    path("api/contact/", contact_api, name="contact-api"),
     path("api/products/<int:id>/", product_detail),
+
+    path("api/contact/", contact_api, name="contact-api"),
+
     path("api/create-order/", create_order),
-    path(
-    "api/verify-payment/",
-    verify_payment
-),
+    path("api/verify-payment/", verify_payment),
+
+    path("robots.txt", robots_txt),
 ]
