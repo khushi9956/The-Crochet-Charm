@@ -79,18 +79,16 @@ def robots_txt(request):
 
 @api_view(["GET"])
 def product_list(request):
-    products = Product.objects.all()
-    serializer = ProductSerializer(products, many=True)
-    return Response(serializer.data)
-@api_view(["GET"])
-def product_detail(request, id):
     try:
-        product = Product.objects.get(id=id)
-    except Product.DoesNotExist:
-        return Response({"error": "Product not found"}, status=404)
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
 
-    serializer = ProductSerializer(product)
-    return Response(serializer.data)
+    except Exception as e:
+        return Response(
+            {"error": str(e)},
+            status=500
+        )
 @api_view(["POST"])
 def contact_api(request):
 

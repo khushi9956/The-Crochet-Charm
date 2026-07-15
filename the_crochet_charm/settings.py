@@ -155,9 +155,9 @@ import cloudinary
 
 
 cloudinary.config(
-    cloud_name="ns4hy0l2",
-    api_key="581854196373421",
-    api_secret="HoQeJBJGhKvnhyMDgd9TLZI-PxU",
+    cloud_name=os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.environ.get("CLOUDINARY_API_KEY"),
+    api_secret=os.environ.get("CLOUDINARY_API_SECRET"),
     secure=True,
 )
 
