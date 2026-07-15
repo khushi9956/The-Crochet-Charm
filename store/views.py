@@ -1,13 +1,21 @@
 import os
 import razorpay
 import hmac
+import random
 import hashlib
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from .models import Product, Contact
+from django.db import transaction
+from .models import (
+    Product,
+    Contact,
+    Order,
+    OrderItem,
+)
+from django.db import IntegrityError
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import HttpResponse
@@ -160,6 +168,13 @@ def verify_payment(request):
     razorpay_payment_id = request.data.get("razorpay_payment_id")
     razorpay_signature = request.data.get("razorpay_signature")
 
+    customer = request.data.get("customer", {})
+    products = request.data.get("products", [])
+
+    subtotal = request.data.get("subtotal", 0)
+    delivery_charge = request.data.get("delivery_charge", 40)
+    total = request.data.get("total", 0)
+
     client = razorpay.Client(
         auth=(
             settings.RAZORPAY_KEY_ID,
@@ -174,8 +189,143 @@ def verify_payment(request):
             "razorpay_signature": razorpay_signature,
         })
 
-        return JsonResponse({"success": True})
+        order_number = f"TCC{random.randint(100000,999999)}"
 
-    except Exception:
-        return JsonResponse({"success": False}, status=400)
-   
+        while Order.objects.filter(order_number=order_number).exists():
+            order_number = f"TCC{random.randint(100000,999999)}"
+
+        with transaction.atomic():
+
+            order = Order.objects.create(
+                order_number=order_number,
+
+                customer_name=customer.get("name", ""),
+                phone=customer.get("phone", ""),
+                email=customer.get("email", ""),
+
+                address=customer.get("address", ""),
+                city=customer.get("city", ""),
+                state=customer.get("state", ""),
+                pincode=customer.get("pincode", ""),
+
+                subtotal=subtotal,
+                delivery_charge=delivery_charge,
+                total=total,
+
+                razorpay_order_id=razorpay_order_id,
+                payment_id=razorpay_payment_id,
+
+                payment_status="Paid",
+                order_status="Confirmed",
+            )
+
+            for item in products:
+
+                product = Product.objects.get(id=item["id"])
+
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=item.get("quantity", 1),
+                    price=item.get("price", product.price),
+                )
+
+        return JsonResponse({
+            "success": True,
+            "order_number": order.order_number,
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "error": str(e),
+        }, status=400)
+@api_view(["GET"])
+def my_orders(request):
+
+    email = request.GET.get("email")
+
+    if not email:
+        return Response(
+            {"error": "Email is required"},
+            status=400
+        )
+
+    orders = Order.objects.filter(
+        email=email
+    ).order_by("-created_at")
+
+    data = []
+
+    for order in orders:
+
+        data.append({
+
+            "order_number": order.order_number,
+
+            "customer_name": order.customer_name,
+
+            "total": order.total,
+
+            "payment_status": order.payment_status,
+
+            "order_status": order.order_status,
+
+            "created_at": order.created_at,
+
+        })
+
+    return Response(data)
+@api_view(["GET"])
+def order_detail(request, order_number):
+
+    try:
+        order = Order.objects.get(order_number=order_number)
+
+    except Order.DoesNotExist:
+        return Response(
+            {"error": "Order not found"},
+            status=404
+        )
+
+    items = []
+
+    for item in order.items.all():
+
+        items.append({
+            "name": item.product.name,
+            "image": item.product.image.url,
+            "price": item.price,
+            "quantity": item.quantity,
+        })
+
+    return Response({
+
+        "order_number": order.order_number,
+
+        "customer_name": order.customer_name,
+
+        "phone": order.phone,
+
+        "email": order.email,
+
+        "address": order.address,
+
+        "city": order.city,
+
+        "state": order.state,
+
+        "pincode": order.pincode,
+
+        "subtotal": order.subtotal,
+
+        "delivery_charge": order.delivery_charge,
+
+        "total": order.total,
+
+        "payment_status": order.payment_status,
+
+        "order_status": order.order_status,
+
+        "items": items,
+    })

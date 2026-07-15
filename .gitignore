@@ -1,0 +1,26 @@
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Database
+db.sqlite3
+
+# Media
+media/
+
+# Static
+staticfiles/
+
+# Virtual Environment
+venv/
+
+# VS Code
+.vscode/
+
+# Ignore generated folders
+.next/
+node_modules/
+next-env.d.ts

@@ -1,6 +1,8 @@
 from django.urls import path
 from .views import (
     home,
+    my_orders,
+    order_detail,
     products,
     robots_txt,
     product_list,
@@ -21,6 +23,10 @@ urlpatterns = [
 
     path("api/create-order/", create_order),
     path("api/verify-payment/", verify_payment),
-
+    path("api/my-orders/", my_orders),
     path("robots.txt", robots_txt),
+    path(
+    "api/order/<str:order_number>/",
+    order_detail,
+),
 ]
