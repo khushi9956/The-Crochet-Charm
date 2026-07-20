@@ -87,16 +87,16 @@ def robots_txt(request):
 
 @api_view(["GET"])
 def product_list(request):
-    try:
-        products = Product.objects.all()
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
+    products = Product.objects.all()
 
-    except Exception as e:
-        return Response(
-            {"error": str(e)},
-            status=500
-        )
+    print("=" * 50)
+    print("PRODUCT COUNT:", products.count())
+    print("DATABASE:", settings.DATABASES["default"]["ENGINE"])
+    print("DB NAME:", settings.DATABASES["default"]["NAME"])
+    print("=" * 50)
+
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
 @api_view(["GET"])
 def product_detail(request, id):
     try:

@@ -1,0 +1,11 @@
+[1mdiff --git a/db.sqlite3 b/db.sqlite3[m
+[1mindex 1a4cbc9..5ee5afb 100644[m
+Binary files a/db.sqlite3 and b/db.sqlite3 differ
+Submodule the-crochet-charm-next 65e4041..55e7695:
+[32m  > Rename footer to Footer[m
+[32m  > Temp rename footer[m
+[32m  > Update footer and layout[m
+[32m  > Add My Orders, Footer, Order Details and Policy Pages[m
+[1mdiff --git a/the_crochet_charm/__pycache__/settings.cpython-314.pyc b/the_crochet_charm/__pycache__/settings.cpython-314.pyc[m
+[1mindex c76546a..3d7ca4e 100644[m
+Binary files a/the_crochet_charm/__pycache__/settings.cpython-314.pyc and b/the_crochet_charm/__pycache__/settings.cpython-314.pyc differ
