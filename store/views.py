@@ -122,13 +122,12 @@ def contact_api(request):
     # Send Email (don't fail the API if email has an issue)
     try:
         send_mail(
-            subject=f"New Contact Form Submission - {name}",
-            message=(
-                f"New message from The Crochet Charm Website\n\n"
-                f"Name: {name}\n"
-                f"Email: {email}\n\n"
-                f"Message:\n{message}"
-            ),
+    subject=f"New Contact Form Submission - {name}",
+    message=message_text,
+    from_email=settings.DEFAULT_FROM_EMAIL,
+    recipient_list=[settings.DEFAULT_FROM_EMAIL],
+    fail_silently=False,
+)
             from_email=settings.DEFAULT_FROM_EMAIL,
             recipient_list=[settings.DEFAULT_FROM_EMAIL],
             fail_silently=False,
