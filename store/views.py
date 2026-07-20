@@ -329,3 +329,33 @@ def order_detail(request, order_number):
 
         "items": items,
     })
+
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+
+
+def create_render_superuser(request):
+    try:
+        username = "admin"
+        email = "khushishukl185@gmail.com"
+        password = "Admin@12345"
+
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({
+                "message": "Superuser already exists"
+            })
+
+        User.objects.create_superuser(
+            username=username,
+            email=email,
+            password=password,
+        )
+
+        return JsonResponse({
+            "message": "Superuser created successfully"
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "error": str(e)
+        }, status=500)

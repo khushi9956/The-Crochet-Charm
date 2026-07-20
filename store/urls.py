@@ -30,3 +30,12 @@ urlpatterns = [
     order_detail,
 ),
 ]
+from . import views
+
+urlpatterns = [
+    ...
+    path(
+        "create-render-superuser/",
+        views.create_render_superuser,
+    ),
+]
