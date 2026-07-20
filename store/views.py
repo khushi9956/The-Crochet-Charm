@@ -108,7 +108,6 @@ def product_detail(request, id):
     return Response(serializer.data)
 @api_view(["POST"])
 def contact_api(request):
-
     name = request.data.get("name")
     email = request.data.get("email")
     message = request.data.get("message")
@@ -120,47 +119,27 @@ def contact_api(request):
         message=message
     )
 
-    send_mail(
-    subject=f"🌸 New Contact Form Submission - {name}",
-    message=(
-        f"New message from The Crochet Charm Website\n\n"
-        f"Name: {name}\n"
-        f"Email: {email}\n\n"
-        f"Message:\n{message}"
-    ),
-    from_email=settings.EMAIL_HOST_USER,
-    recipient_list=[settings.EMAIL_HOST_USER],
-    fail_silently=False,
-)
+    # Send Email (don't fail the API if email has an issue)
+    try:
+        send_mail(
+            subject=f"New Contact Form Submission - {name}",
+            message=(
+                f"New message from The Crochet Charm Website\n\n"
+                f"Name: {name}\n"
+                f"Email: {email}\n\n"
+                f"Message:\n{message}"
+            ),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.DEFAULT_FROM_EMAIL],
+            fail_silently=False,
+        )
+    except Exception as e:
+        print("Email Error:", str(e))
+
     return Response({
         "success": True,
         "message": "Message sent successfully."
     })
-
-@api_view(["POST"])
-def create_order(request):
-    try:
-        amount = request.data.get("amount")
-
-        client = razorpay.Client(
-            auth=(
-                settings.RAZORPAY_KEY_ID,
-                settings.RAZORPAY_KEY_SECRET,
-            )
-        )
-
-        order = client.order.create({
-            "amount": int(amount),
-            "currency": "INR",
-            "payment_capture": 1,
-        })
-
-        return Response(order)
-
-    except Exception as e:
-        import traceback
-        print(traceback.format_exc())   # Full error Render Logs me aayega
-        return Response({"error": str(e)}, status=500)
 @api_view(["POST"])
 def verify_payment(request):
 
