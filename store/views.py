@@ -336,9 +336,9 @@ from django.http import JsonResponse
 
 def create_render_superuser(request):
     try:
-        username = "admin"
+        username = "khush"
         email = "khushishukl185@gmail.com"
-        password = "Admin@12345"
+        password = "khushi6387"
 
         if User.objects.filter(username=username).exists():
             return JsonResponse({
