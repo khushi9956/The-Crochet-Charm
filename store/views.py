@@ -122,18 +122,17 @@ def contact_api(request):
     # Send Email (don't fail the API if email has an issue)
     try:
         send_mail(
-    subject=f"New Contact Form Submission - {name}",
-    message=message_text,
+                subject=f"New Contact Form Submission - {name}",
+                message=message_text,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.DEFAULT_FROM_EMAIL],
+                fail_silently=False,
+)
     from_email=settings.DEFAULT_FROM_EMAIL,
     recipient_list=[settings.DEFAULT_FROM_EMAIL],
-    fail_silently=False,
-)
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.DEFAULT_FROM_EMAIL],
-            fail_silently=False,
-        )
-    except Exception as e:
-        print("Email Error:", str(e))
+    fail_silently=False
+    )except Exception as e:
+    print("Email Error:", str(e))
 
     return Response({
         "success": True,
