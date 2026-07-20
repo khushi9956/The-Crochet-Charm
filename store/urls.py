@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+
 from .views import (
     home,
     my_orders,
@@ -30,9 +30,6 @@ urlpatterns = [
     "api/order/<str:order_number>/",
     order_detail,
     ),
-path(
-        "create-render-superuser/",
-        views.create_render_superuser,
-    ),
+
 
 ]
