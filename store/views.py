@@ -108,6 +108,7 @@ def product_detail(request, id):
     return Response(serializer.data)
 @api_view(["POST"])
 def contact_api(request):
+    print("CONTACT API CALLED")
     name = request.data.get("name")
     email = request.data.get("email")
     message = request.data.get("message")
