@@ -109,8 +109,6 @@ def product_detail(request, id):
     return Response(serializer.data)
 @api_view(["POST"])
 def contact_api(request):
-    print("CONTACT API CALLED")
-
     name = request.data.get("name")
     email = request.data.get("email")
     message = request.data.get("message")
@@ -121,11 +119,7 @@ def contact_api(request):
         message=message
     )
 
-    print("STEP 1")
-
     try:
-        print("STEP 2")
-
         sent = send_mail(
             subject=f"New Contact Form Submission - {name}",
             message=(
@@ -139,12 +133,10 @@ def contact_api(request):
             fail_silently=False,
         )
 
-        print("STEP 3")
-        print(sent)
+        print("EMAIL SENT:", sent)
 
     except Exception as e:
-        print("STEP 4")
-        print(repr(e))
+        print("EMAIL ERROR:", repr(e))
 
     return Response({
         "success": True,
