@@ -5,9 +5,10 @@ import random
 import hashlib
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
-from django.conf import settings
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 from django.db import transaction
 from .models import (
     Product,
@@ -121,26 +122,30 @@ def contact_api(request):
     )
 
     # Send Email (don't fail the API if email has an issue)
-    try:
-        send_mail(
-            subject=f"New Contact Form Submission - {name}",
-            message=(
-                f"New message from The Crochet Charm Website\n\n"
-                f"Name: {name}\n"
-                f"Email: {email}\n\n"
-                f"Message:\n{message}"
-            ),
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.DEFAULT_FROM_EMAIL],
-            fail_silently=False,
-        )
-    except Exception as e:
-        print("Email Error:", str(e))
+    print("STEP 1")
 
-    return Response({
-        "success": True,
-        "message": "Message sent successfully."
-    })
+try:
+    print("STEP 2")
+
+    sent = send_mail(
+        subject=f"New Contact Form Submission - {name}",
+        message=(
+            f"New message from The Crochet Charm Website\n\n"
+            f"Name: {name}\n"
+            f"Email: {email}\n\n"
+            f"Message:\n{message}"
+        ),
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[settings.EMAIL_HOST_USER],
+        fail_silently=False,
+    )
+
+    print("STEP 3")
+    print(sent)
+
+except Exception as e:
+    print("STEP 4")
+    print(repr(e))
 @api_view(["POST"])
 def create_order(request):
  try:
