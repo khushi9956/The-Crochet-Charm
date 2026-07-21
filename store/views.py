@@ -142,35 +142,27 @@ def contact_api(request):
     })
 @api_view(["POST"])
 def create_order(request):
-    try:
-        amount = request.data.get("amount")
+   try:
+    sent = send_mail(
+        subject=f"New Contact Form Submission - {name}",
+        message=(
+            f"New message from The Crochet Charm Website\n\n"
+            f"Name: {name}\n"
+            f"Email: {email}\n\n"
+            f"Message:\n{message}"
+        ),
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        recipient_list=[settings.EMAIL_HOST_USER],
+        fail_silently=False,
+    )
 
-        if not amount:
-            return Response(
-                {"error": "Amount is required"},
-                status=400
-            )
+    print("EMAIL SENT COUNT:", sent)
 
-        client = razorpay.Client(
-            auth=(
-                settings.RAZORPAY_KEY_ID,
-                settings.RAZORPAY_KEY_SECRET,
-            )
-        )
-
-        order = client.order.create({
-            "amount": int(amount),
-            "currency": "INR",
-            "payment_capture": 1,
-        })
-
-        return Response(order)
-
-    except Exception as e:
-        return Response(
-            {"error": str(e)},
-            status=500
-        )
+   except Exception as e:
+    import traceback
+    print("===== EMAIL ERROR =====")
+    print(traceback.format_exc())
+    print("=======================")
 @api_view(["POST"])
 def verify_payment(request):
 
