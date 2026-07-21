@@ -142,7 +142,7 @@ def contact_api(request):
     })
 @api_view(["POST"])
 def create_order(request):
-   try:
+ try:
     sent = send_mail(
         subject=f"New Contact Form Submission - {name}",
         message=(
@@ -156,13 +156,11 @@ def create_order(request):
         fail_silently=False,
     )
 
-    print("EMAIL SENT COUNT:", sent)
+    print("EMAIL SENT:", sent)
 
-   except Exception as e:
+ except Exception:
     import traceback
-    print("===== EMAIL ERROR =====")
     print(traceback.format_exc())
-    print("=======================")
 @api_view(["POST"])
 def verify_payment(request):
 
