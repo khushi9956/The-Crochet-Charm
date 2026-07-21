@@ -110,42 +110,46 @@ def product_detail(request, id):
 @api_view(["POST"])
 def contact_api(request):
     print("CONTACT API CALLED")
+
     name = request.data.get("name")
     email = request.data.get("email")
     message = request.data.get("message")
 
-    # Save to Database
     Contact.objects.create(
         name=name,
         email=email,
         message=message
     )
 
-    # Send Email (don't fail the API if email has an issue)
     print("STEP 1")
 
-try:
-    print("STEP 2")
+    try:
+        print("STEP 2")
 
-    sent = send_mail(
-        subject=f"New Contact Form Submission - {name}",
-        message=(
-            f"New message from The Crochet Charm Website\n\n"
-            f"Name: {name}\n"
-            f"Email: {email}\n\n"
-            f"Message:\n{message}"
-        ),
-        from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[settings.EMAIL_HOST_USER],
-        fail_silently=False,
-    )
+        sent = send_mail(
+            subject=f"New Contact Form Submission - {name}",
+            message=(
+                f"New message from The Crochet Charm Website\n\n"
+                f"Name: {name}\n"
+                f"Email: {email}\n\n"
+                f"Message:\n{message}"
+            ),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[settings.EMAIL_HOST_USER],
+            fail_silently=False,
+        )
 
-    print("STEP 3")
-    print(sent)
+        print("STEP 3")
+        print(sent)
 
-except Exception as e:
-    print("STEP 4")
-    print(repr(e))
+    except Exception as e:
+        print("STEP 4")
+        print(repr(e))
+
+    return Response({
+        "success": True,
+        "message": "Message sent successfully."
+    })
 @api_view(["POST"])
 def create_order(request):
  try:
