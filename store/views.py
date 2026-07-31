@@ -1,3 +1,4 @@
+import requests
 import os
 import razorpay
 import hmac
@@ -118,26 +119,49 @@ def contact_api(request):
         email=email,
         message=message
     )
+import requests
+import os
 
-    try:
-        sent = send_mail(
-            subject=f"New Contact Form Submission - {name}",
-            message=(
-                f"New message from The Crochet Charm Website\n\n"
-                f"Name: {name}\n"
-                f"Email: {email}\n\n"
-                f"Message:\n{message}"
-            ),
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[settings.EMAIL_HOST_USER],
-            fail_silently=False,
-        )
+try:
+    response = requests.post(
+        "https://api.brevo.com/v3/smtp/email",
+        headers={
+            "accept": "application/json",
+            "api-key": os.environ.get("BREVO_API_KEY"),
+            "content-type": "application/json",
+        },
+        json={
+            "sender": {
+                "name": "The Crochet Charm",
+                "email": "thecrochetcharms@gmail.com"
+            },
+            "to": [
+                {
+                    "email": "thecrochetcharms@gmail.com",
+                    "name": "Khushi"
+                }
+            ],
+            "subject": f"🌸 New Contact Form Submission - {name}",
+            "htmlContent": f"""
+            <h2>New Contact Form Submission</h2>
 
-        print("EMAIL SENT:", sent)
+            <p><b>Name:</b> {name}</p>
 
-    except Exception as e:
-        print("EMAIL ERROR:", repr(e))
+            <p><b>Email:</b> {email}</p>
 
+            <p><b>Message:</b></p>
+
+            <p>{message}</p>
+            """
+        },
+        timeout=20,
+    )
+
+    print("BREVO STATUS:", response.status_code)
+    print("BREVO RESPONSE:", response.text)
+
+except Exception as e:
+    print("BREVO ERROR:", str(e))
     return Response({
         "success": True,
         "message": "Message sent successfully."
