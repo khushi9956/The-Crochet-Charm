@@ -182,7 +182,7 @@ def create_order(request):
     )
 
     print("EMAIL SENT:", sent)
-
+    print(os.environ.get("BREVO_API_KEY"))
  except Exception:
     import traceback
     print(traceback.format_exc())
