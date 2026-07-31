@@ -246,25 +246,57 @@ def verify_payment(request):
 
             for item in products:
 
-                product = Product.objects.get(id=item["id"])
+                   product = Product.objects.get(id=item["id"])
 
-                OrderItem.objects.create(
-                    order=order,
-                    product=product,
-                    quantity=item.get("quantity", 1),
-                    price=item.get("price", product.price),
-                )
+    OrderItem.objects.create(
+        order=order,
+        product=product,
+        quantity=item.get("quantity", 1),
+        price=item.get("price", product.price),
+    )
+    try: 
+       requests.post(
+        "https://api.brevo.com/v3/smtp/email",
+        headers={
+            "accept": "application/json",
+            "api-key": os.environ.get("BREVO_API_KEY"),
+            "content-type": "application/json",
+        },
+        json={
+            "sender": {
+                "name": "The Crochet Charm",
+                "email": "thecrochetcharms@gmail.com"
+            },
+            "to": [
+                {
+                    "email": order.email
+                }
+            ],
+            "subject": f"Order Confirmed - {order.order_number}",
+            "htmlContent": f"""
+            <h2>Thank you for your order ❤️</h2>
 
-        return JsonResponse({
+            <p>Hi {order.customer_name},</p>
+
+            <p>Your order has been placed successfully.</p>
+
+            <p><b>Order Number:</b> {order.order_number}</p>
+
+            <p><b>Total:</b> ₹{order.total}</p>
+
+            <p>Thank you for shopping with The Crochet Charm 🌸</p>
+            """
+        }
+    )
+
+    except Exception as e:
+     print("ORDER EMAIL ERROR:", e)
+
+    return JsonResponse({
             "success": True,
             "order_number": order.order_number,
         })
 
-    except Exception as e:
-        return JsonResponse({
-            "success": False,
-            "error": str(e),
-        }, status=400)
 @api_view(["GET"])
 def my_orders(request):
 
