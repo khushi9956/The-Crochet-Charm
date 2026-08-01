@@ -214,88 +214,101 @@ def verify_payment(request):
             "razorpay_signature": razorpay_signature,
         })
 
-        order_number = f"TCC{random.randint(100000,999999)}"
+        order_number = f"TCC{random.randint(100000, 999999)}"
 
         while Order.objects.filter(order_number=order_number).exists():
-            order_number = f"TCC{random.randint(100000,999999)}"
+            order_number = f"TCC{random.randint(100000, 999999)}"
 
         with transaction.atomic():
 
             order = Order.objects.create(
                 order_number=order_number,
-
                 customer_name=customer.get("name", ""),
                 phone=customer.get("phone", ""),
                 email=customer.get("email", ""),
-
                 address=customer.get("address", ""),
                 city=customer.get("city", ""),
                 state=customer.get("state", ""),
                 pincode=customer.get("pincode", ""),
-
                 subtotal=subtotal,
                 delivery_charge=delivery_charge,
                 total=total,
-
                 razorpay_order_id=razorpay_order_id,
                 payment_id=razorpay_payment_id,
-
                 payment_status="Paid",
                 order_status="Confirmed",
             )
 
             for item in products:
+                product = Product.objects.get(id=item["id"])
 
-                   product = Product.objects.get(id=item["id"])
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=item.get("quantity", 1),
+                    price=item.get("price", product.price),
+                )
 
-    OrderItem.objects.create(
-        order=order,
-        product=product,
-        quantity=item.get("quantity", 1),
-        price=item.get("price", product.price),
-    )
-    try: 
-       requests.post(
-        "https://api.brevo.com/v3/smtp/email",
-        headers={
-            "accept": "application/json",
-            "api-key": os.environ.get("BREVO_API_KEY"),
-            "content-type": "application/json",
-        },
-        json={
-            "sender": {
-                "name": "The Crochet Charm",
-                "email": "thecrochetcharms@gmail.com"
-            },
-            "to": [
-                {
-                    "email": order.email
-                }
-            ],
-            "subject": f"Order Confirmed - {order.order_number}",
-            "htmlContent": f"""
-            <h2>Thank you for your order ❤️</h2>
+        # -----------------------------
+        # Send Order Confirmation Email
+        # -----------------------------
+        try:
+            response = requests.post(
+                "https://api.brevo.com/v3/smtp/email",
+                headers={
+                    "accept": "application/json",
+                    "api-key": os.environ.get("BREVO_API_KEY"),
+                    "content-type": "application/json",
+                },
+                json={
+                    "sender": {
+                        "name": "The Crochet Charm",
+                        "email": "thecrochetcharms@gmail.com",
+                    },
+                    "to": [
+                        {
+                            "email": order.email,
+                            "name": order.customer_name,
+                        }
+                    ],
+                    "subject": f"🌸 Order Confirmed - {order.order_number}",
+                    "htmlContent": f"""
+                        <h2>Thank you for shopping with The Crochet Charm ❤️</h2>
 
-            <p>Hi {order.customer_name},</p>
+                        <p>Hello <b>{order.customer_name}</b>,</p>
 
-            <p>Your order has been placed successfully.</p>
+                        <p>Your order has been placed successfully.</p>
 
-            <p><b>Order Number:</b> {order.order_number}</p>
+                        <p><b>Order Number:</b> {order.order_number}</p>
+                        <p><b>Total:</b> ₹{order.total}</p>
+                        <p><b>Payment Status:</b> {order.payment_status}</p>
 
-            <p><b>Total:</b> ₹{order.total}</p>
+                        <p>We will start preparing your order soon.</p>
 
-            <p>Thank you for shopping with The Crochet Charm 🌸</p>
-            """
-        }
-    )
+                        <br>
 
-    except Exception as e:
-     print("ORDER EMAIL ERROR:", e)
+                        <p>Thank you for supporting handmade creations! 🌸</p>
+                    """,
+                },
+                timeout=20,
+            )
 
-    return JsonResponse({
+            print("ORDER EMAIL STATUS:", response.status_code)
+            print("ORDER EMAIL RESPONSE:", response.text)
+
+        except Exception as email_error:
+            print("ORDER EMAIL ERROR:", email_error)
+
+        return JsonResponse({
             "success": True,
             "order_number": order.order_number,
         })
+
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "error": str(e),
+        }, status=400)
 
 @api_view(["GET"])
 def my_orders(request):
