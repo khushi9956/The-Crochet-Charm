@@ -238,7 +238,18 @@ def verify_payment(request):
                 payment_status="Paid",
                 order_status="Confirmed",
             )
+            items_html = ""
 
+            for item in products:
+             items_html += f"""
+    <tr>
+        <td>{item.get('name', 'Product')}</td>
+        <td>{item.get('quantity', 1)}</td>
+        <td>₹{item.get('price', 0)}</td>
+    </tr>
+    """
+
+    
             for item in products:
                 product = Product.objects.get(id=item["id"])
 
@@ -271,6 +282,13 @@ def verify_payment(request):
                             "name": order.customer_name,
                         }
                     ],
+                    "cc": [
+                        {
+                            "email": "thecrochetcharms@gmail.com",
+                            "name": "The Crochet Charm Admin"
+                        }
+                    ], 
+                    
                     "subject": f"🌸 Order Confirmed - {order.order_number}",
                     "htmlContent": f"""
                         <h2>Thank you for shopping with The Crochet Charm ❤️</h2>
@@ -281,6 +299,18 @@ def verify_payment(request):
 
                         <p><b>Order Number:</b> {order.order_number}</p>
                         <p><b>Total:</b> ₹{order.total}</p>
+                        <h3>Your Items</h3>
+
+<table border="1" cellpadding="8" cellspacing="0" width="100%">
+<tr>
+<th>Product</th>
+<th>Qty</th>
+<th>Price</th>
+</tr>
+
+{items_html}
+
+</table>
                         <p><b>Payment Status:</b> {order.payment_status}</p>
 
                         <p>We will start preparing your order soon.</p>
