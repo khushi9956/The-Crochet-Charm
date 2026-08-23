@@ -11,6 +11,9 @@ from .views import (
     contact_api,
     create_order,
     verify_payment,
+    clerk_test,
+    address_api,
+    address_detail,
 )
 
 urlpatterns = [
@@ -30,6 +33,14 @@ urlpatterns = [
     "api/order/<str:order_number>/",
     order_detail,
     ),
+    path("api/clerk-test/", clerk_test, name="clerk-test"),
+    path("api/address/", address_api, name="api-address"),
+
+path(
+    "api/address/<int:address_id>/",
+    address_detail,
+    name="api-address-detail",
+),
 
 
 ]
