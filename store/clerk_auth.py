@@ -26,12 +26,15 @@ class ClerkAuthentication(BaseAuthentication):
                 bearer_auth=secret_key
             )
 
+            authorized_parties = [
+                "http://localhost:3000",
+                "https://the-crochet-charm-next.vercel.app",
+            ]
+
             request_state = clerk.authenticate_request(
                 request,
                 AuthenticateRequestOptions(
-                    authorized_parties=[
-                        "http://localhost:3000",
-                    ],
+                    authorized_parties=authorized_parties,
                 ),
             )
 
@@ -51,7 +54,6 @@ class ClerkAuthentication(BaseAuthentication):
                 "Clerk user ID was not found."
             )
 
-        # Find existing Clerk profile
         try:
             profile = ClerkUserProfile.objects.select_related(
                 "user"
@@ -63,7 +65,6 @@ class ClerkAuthentication(BaseAuthentication):
 
         except ClerkUserProfile.DoesNotExist:
 
-            # Create a Django username based on Clerk ID
             username = f"clerk_{clerk_user_id}"
 
             user, created = User.objects.get_or_create(
