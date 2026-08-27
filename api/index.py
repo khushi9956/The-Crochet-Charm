@@ -1,0 +1,16 @@
+import os
+import sys
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
+os.environ.setdefault(
+    "DJANGO_SETTINGS_MODULE",
+    "the_crochet_charm.settings"
+)
+
+from django.core.wsgi import get_wsgi_application
+
+app = get_wsgi_application()
