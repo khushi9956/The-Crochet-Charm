@@ -6,6 +6,7 @@
       "use": "@vercel/python",
       "config": {
         "includeFiles": [
+          "static/**",
           "staticfiles/**"
         ]
       }
@@ -16,6 +17,5 @@
       "src": "/(.*)",
       "dest": "api/index.py"
     }
-  ],
-  "buildCommand": "bash build.sh"
+  ]
 }
