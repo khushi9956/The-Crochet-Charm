@@ -11,6 +11,8 @@ from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from django.db import transaction
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .models import (
@@ -91,6 +93,7 @@ def robots_txt(request):
     return HttpResponse("\n".join(lines), content_type="text/plain")
 
 @api_view(["GET"])
+@renderer_classes([JSONRenderer])
 def product_list(request):
     products = Product.objects.all()
 
